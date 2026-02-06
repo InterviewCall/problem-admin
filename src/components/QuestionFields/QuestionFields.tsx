@@ -10,12 +10,20 @@ import { CodeStub } from '@/types';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import Loader from '../Loader/Loader';
 
+export const PROBLEM_LEVEL = [
+    { label: 'Intermediate', value: 'Intermediate' },
+    { label: 'Advanced', value: 'Advanced' },
+];
+
+
 const QuestionFields: FC = () => {
   const [showStubs, setShowStubs] = useState(false);
   const [options, setOptions] = useState<string[]>(['', '', '', '']);
   const [codeStubs, setCodeStubs] = useState<CodeStub[]>(stubs);
   const [topic, setTopic] = useState('');
   const [title, setTitle] = useState('');
+  const [questionNumber, setQuestionNumber] = useState('');
+  const [problemLevel, setProblemLevel] = useState('');
   const [statement, setStatement] = useState('');
   const [correctOption, setCorrectOption] = useState('');
   const [marks, setMarks] = useState('');
@@ -42,6 +50,8 @@ const QuestionFields: FC = () => {
     setShowStubs(false);
     setOptions(['', '', '', '']);
     setCodeStubs(stubs);
+    setQuestionNumber('');
+    setProblemLevel('');
   }
 
   async function createProblem(e: FormEvent) {
@@ -56,8 +66,10 @@ const QuestionFields: FC = () => {
                 codeStubs: showStubs ? codeStubs : null,
                 options,
                 correctOption,
-                marks: Number(marks)
-            }]
+                marks: Number(marks),
+                questionNumber: Number(questionNumber),
+            }],
+            problemLevel
         });
         setLoading(false);
         toast.success('Successfully created a problem');
@@ -65,6 +77,7 @@ const QuestionFields: FC = () => {
     } catch (error: any) {
         const message = error.response.data.message;
         toast.error(message);
+        setLoading(false);
     } finally {
         clear();
     }
@@ -78,6 +91,36 @@ const QuestionFields: FC = () => {
       </legend>
 
       <form onSubmit={createProblem}>
+        <label className='fieldset-label text-[#3d434b] text-xl'>Question Number</label>
+        <input
+          type='text'
+          className='input bg-white w-full focus:border-blue-500'
+          placeholder='Enter Question Number'
+          value={questionNumber}
+          onChange={(e) => setQuestionNumber(e.target.value)}
+        />
+
+        <label className='fieldset-label text-[#3d434b] text-xl'>
+          Problem Level
+        </label>
+
+        <select
+          className='input bg-white w-full focus:border-blue-500 cursor-pointer'
+          value={problemLevel}
+          onChange={(e) => setProblemLevel(e.target.value)}
+        >
+          <option value='' disabled className='text-gray-400'>
+            Select Problem Level
+          </option>
+
+          {PROBLEM_LEVEL.map((level) => (
+            <option key={level.value} value={level.value}>
+              {level.label}
+            </option>
+          ))}
+        </select>
+
+
         <label className='fieldset-label text-[#3d434b] text-xl'>Topic</label>
         <input
           type='text'

@@ -15,8 +15,8 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { userAnswers } = await req.json();
-    const response = await problemService.calculateScore(userAnswers);
+    const { userAnswers, problemLevel } = await req.json();
+    const response = await problemService.calculateScore({problemLevel, userAnswers});
 
     return new NextResponse(
       JSON.stringify({

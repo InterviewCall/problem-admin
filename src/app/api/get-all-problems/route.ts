@@ -1,10 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import problemService from '@/lib/problemServiceInstance';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const response = await problemService.getAllProblems();
+
+    const { searchParams } = new URL(req.url);
+    const problemLevel = searchParams.get('problemLevel');
+    const response = await problemService.getAllProblems(problemLevel!);
     
     return new NextResponse(JSON.stringify({
       success: true,

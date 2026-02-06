@@ -4,10 +4,11 @@ import problemService from '@/lib/problemServiceInstance';
 
 export async function POST(req: NextRequest) {
     try {
-        const { problemTopic, problemDescription } = await req.json();
+        const { problemTopic, problemDescription, problemLevel } = await req.json();
         const response = await problemService.createProblem({
             problemTopic,
-            problemDescription
+            problemDescription,
+            problemLevel,
         });
 
         return NextResponse.json({
