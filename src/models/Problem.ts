@@ -15,6 +15,7 @@ export interface IProblemDescription {
 export interface IProblemSet extends Document {
     problemTopic: string
     problemDescription: IProblemDescription[]
+    problemLevel: string
 }
 
 const codeStubSchema = new Schema<CodeStub>({
@@ -79,6 +80,11 @@ const problemSchema = new Schema<IProblemSet>({
     problemDescription: {
         type: [problemDescriptionSchema],
         default: []
+    },
+
+    problemLevel: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 

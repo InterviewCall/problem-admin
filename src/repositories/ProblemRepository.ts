@@ -25,14 +25,16 @@ class ProblemRepository {
         return problem;
     }
 
-    async getAllProblems(flag?: number): Promise<IProblemSet[]> {
+    async getAllProblems(problemLevel: string, flag?: number): Promise<IProblemSet[]> {
         if(flag != undefined) {
             const problems = await this.problemModel.find().lean();
             return problems;
         }
 
         const problems = await this.problemModel.find(
-            {},
+            {
+                problemLevel,
+            },
             {
               'problemDescription.correctOption': 0
             }

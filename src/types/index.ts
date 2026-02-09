@@ -24,6 +24,7 @@ export interface IProblemSet extends Document {
 export interface ProblemData {
     problemTopic: string
     problemDescription: IProblemDescription[]
+    problemLevel: string
 }
 
 // export interface IProblemDescriptionWithOptionalCorrectOption extends IProblemDescription {

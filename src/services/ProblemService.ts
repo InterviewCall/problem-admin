@@ -17,9 +17,9 @@ class ProblemService {
         }
     }
 
-    async getAllProblems(flag?: number) {
+    async getAllProblems(problemLevel: string, flag?: number) {
         try {
-            const problems = await this.problemRepository.getAllProblems(flag);
+            const problems = await this.problemRepository.getAllProblems(problemLevel, flag);
             return problems;
         } catch (error) {
             throw error;
@@ -45,9 +45,9 @@ class ProblemService {
         }
     }
 
-    async calculateScore(userAnswers: UserAnswer) {
+    async calculateScore({ problemLevel, userAnswers }: { problemLevel: string, userAnswers: UserAnswer }) {
         try {
-            const allProblems = await this.getAllProblems(1);
+            const allProblems = await this.getAllProblems(problemLevel, 1);
 
             const topicMap = new Map<string, SectionBreakdown>();
             let totalMarks = 0;
