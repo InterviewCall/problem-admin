@@ -1,8 +1,14 @@
 'use client';
 
+import 'katex/dist/katex.min.css';
+
+import MDEditor from '@uiw/react-md-editor';
 import axios from 'axios';
 import { FC, FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
+import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
+import remarkMath from 'remark-math';
 
 import { stubs } from '@/constants';
 import { CodeStub } from '@/types';
@@ -24,7 +30,7 @@ const QuestionFields: FC = () => {
   const [title, setTitle] = useState('');
   const [questionNumber, setQuestionNumber] = useState('');
   const [problemLevel, setProblemLevel] = useState('');
-  const [statement, setStatement] = useState('');
+  const [statement, setStatement] = useState<string | undefined>('');
   const [correctOption, setCorrectOption] = useState('');
   const [marks, setMarks] = useState('');
   const [loading, setLoading] = useState(false);
@@ -140,13 +146,26 @@ const QuestionFields: FC = () => {
         />
 
         <label className='fieldset-label text-[#3d434b] text-xl'>Problem</label>
-        <input
+        {/* <input
           type='text'
           className='input bg-white w-full focus:border-blue-500'
           placeholder='Enter Problem Statement'
           value={statement}
           onChange={(e) => setStatement(e.target.value)}
+        /> */}
+
+        <div data-color-mode="light">
+          <MDEditor 
+          value={statement}
+          onChange={setStatement}
+          height={600}
+          overflow
+          previewOptions={{
+            rehypePlugins: [rehypeRaw, rehypeKatex],
+            remarkPlugins: [remarkMath]
+          }}
         />
+        </div>
 
         <div className='flex gap-x-3 mt-5'>
           <input

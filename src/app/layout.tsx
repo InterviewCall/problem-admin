@@ -1,4 +1,6 @@
 import './globals.css';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
@@ -6,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 
 import { siteConfig } from '@/constants/config';
 import UserContextProvider from '@/contexts/UserContext';
+
 
 // const geistSans = Geist({
 //   variable: '--font-geist-sans',
